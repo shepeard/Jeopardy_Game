@@ -3,6 +3,8 @@ Nick Shepeard's Jeopardy! game
 This program is a spin on the popular television quiz show "Jeopardy!". Test
 your knowledge of three separate categories: American History,
 Science, and Before and After.
+
+![giphy](https://user-images.githubusercontent.com/68496022/145286083-98eddba5-554a-4d12-864a-ac3de52bc9b4.gif)
   
 Functions:
 
