@@ -63,6 +63,7 @@ def introduction():
         # this component of the ELO score exponentially.
     age **= 2
     elo = times + age * 5 / 2 - 50 + 100
+    elo //= 1
     # Calculates player ELO score to be used at the end of the game when
     # determining points. Adds the values of number of times and age,
     # multiplies by 5, divides by 2, subtracts 50, adds 100.
@@ -160,7 +161,7 @@ def execute_american_history_clue(game_info):
             "\nFor 1000 to finish the category: \nThis battle ended "
             "the Revolutionary war and resulted in the surrender of "
             "Genera Cornwallis, also the location of a minor Civil War "
-            "battle: ".lower())
+            "battle: ").lower()
         if answer == "yorktown":
             print("\nCorrect!")
             game_info[0] += 1000
@@ -174,7 +175,7 @@ def execute_american_history_clue(game_info):
 
 def execute_science_clue(game_info):
     """
-    Presents user with the proper history clue corresponding to the clue
+    Presents user with the proper science clue corresponding to the clue
     number. Deducts points from user total score (game_info[0]) if the
     answer is incorrect, and adds points to user total score if the answer
     is correct. Returns game_info so the information can be properly tracked.
@@ -292,12 +293,29 @@ def final_jeopardy(game_info, player_info):
             "\nThat's the end of the Jeopardy round. \nThe Final Jeopardy "
             "category is...")
         sleep(2)
-        print("\nAmerican Universities. Make your wager, up to", game_info[0],
-              "points:")
-        wager = int(input())
         # countdown_timer = None
         final_answer = None
-        if wager < game_info[0]:
+        wager = None
+        while wager is None:
+            print("\nAmerican Universities. Make your wager, up to",
+                  game_info[0],
+                  "points:")
+            wager = int(input())
+            if wager <= game_info[0]:
+                break
+            elif wager > game_info[0]:
+                print(
+                    "You are unable to wager more than you have. Try again!")
+                wager = None
+            elif wager < game_info[0]:
+                print(
+                    "You are unable to wager more than you have. Try again!")
+                wager = None
+            else:
+                print(
+                    "Please enter a valid wager!")
+                wager = None
+        if wager <= game_info[0]:
             sleep(3)
             print(
                 "\nThis Florida university was dubbed "'Dunk City'" when its "
@@ -306,10 +324,10 @@ def final_jeopardy(game_info, player_info):
                 "tournament. \nGood luck, you have 30 seconds.")
             sleep(3)
             for seconds in range(30, 0, -1):
-                sleep(1)
                 while final_answer is None:
                     final_answer = input("Enter your answer: ").lower()
-                break
+                sleep(1)
+                print("There are", seconds, "seconds remaining", end='\r')
             if "florida gulf" in final_answer or "fgcu" in final_answer:
                 print(
                     "\nThat's right! Stay tuned to learn your final score.")
@@ -321,13 +339,6 @@ def final_jeopardy(game_info, player_info):
                     "Gulf Coast University.")
                 game_info[0] -= wager
                 calculate_final_score(game_info, player_info)
-        else:
-            print(
-                "You are unable to wager more than you have. Try again!")
-            print("\nAmerican Universities. Make your wager, up to",
-                  game_info[0],
-                  "points:")
-            wager = int(input())
         return wager
 
 
@@ -340,8 +351,9 @@ def calculate_final_score(game_info, player_info):
     """
     from time import sleep
     sleep(3)
-    print("\nCongratulations,", player_info[0], ". You have finished the Jeopardy! "
-                                                "game!")
+    print("\nCongratulations,", player_info[0],
+          ". You have finished the Jeopardy! "
+          "game!")
     final_score = float(game_info[0])
     bonus = player_info[1]
     if float(final_score) <= float(0):
@@ -355,6 +367,8 @@ def calculate_final_score(game_info, player_info):
               "playing!")
         sleep(15)
         exit()
+        if float(final_score) % 4 == 0:
+            print("Fun fact: Your final score is divisible by 4.")
     else:
         print("\nYou finished with", int(final_score), "points. Well done!")
         print("\nThe game will terminate in 15 seconds. Thank you for "
