@@ -84,7 +84,7 @@ def select_category(game_info):
     from time import sleep
     while game_info[4] < 9:
         print("Enter the number corresponding to one of the "
-              "following categories. To quit, type 'exit' -")
+              "following categories. To quit, type 'exit'.")
         print(" 1) American History\n", "2) Science\n",
               "3) Before and After\n")
         category = str(input("Choose your category: "))
@@ -159,8 +159,8 @@ def execute_american_history_clue(game_info):
         game_info[1] += 1
         answer = input(
             "\nFor 1000 to finish the category: \nThis battle ended "
-            "the Revolutionary war and resulted in the surrender of "
-            "Genera Cornwallis, also the location of a minor Civil War "
+            "the Revolutionary War and resulted in the surrender of "
+            "General Cornwallis, also the location of a minor Civil War "
             "battle: ").lower()
         if answer == "yorktown":
             print("\nCorrect!")
@@ -365,7 +365,6 @@ def calculate_final_score(game_info, player_info):
         # * operator turns the single period into an ellipsis.
         print("\nThe game will terminate in 15 seconds. Thank you for "
               "playing!")
-        sleep(15)
         exit()
         if float(final_score) % 4 == 0:
             print("Fun fact: Your final score is divisible by 4.")
